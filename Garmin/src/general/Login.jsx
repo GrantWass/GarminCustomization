@@ -1,24 +1,27 @@
-import "./general.css"
+
+import "./general.css";
 import { useNavigate } from "react-router-dom";
-import react, {useState} from "react"
+import React, { useState } from "react";
+
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [useGrantData, setUseGrantData] = useState(false);
 
   const handleLogin = () => {
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
+    const emailToUse = useGrantData ? import.meta.env.VITE_EMAIL : email;
+    const passwordToUse = useGrantData ? import.meta.env.VITE_PASSWORD : password;
+
+    localStorage.setItem("email", emailToUse);
+    localStorage.setItem("password", passwordToUse);
 
     navigate("/home");
   };
 
-  const useMyData = () => {
-    localStorage.setEmail("grantwass123@icloud.com");
-    localStorage.setPassword("Exposed4!?");
-
-    navigate("/home");
+  const handleCheckboxChange = () => {
+    setUseGrantData(!useGrantData);
   };
 
   return (
@@ -31,6 +34,7 @@ const Login = () => {
             value={email}
             autoComplete="false"
             onChange={(e) => setEmail(e.target.value)}
+            disabled={useGrantData}
           />
           <label style={{ fontSize: "1rem" }}>Garmin Email</label>
         </div>
@@ -40,21 +44,33 @@ const Login = () => {
             value={password}
             autoComplete="false"
             onChange={(e) => setPassword(e.target.value)}
+            disabled={useGrantData}
           />
           <label style={{ fontSize: "1rem" }}>Garmin Password</label>
         </div>
-        <a type="button" onClick={handleLogin}>
-         <span></span>
-         <span></span>
-         <span></span>
-         <span></span>
-          Submit
-        </a>
+        <label className="checkbox-container">
+            <input
+              type="checkbox"
+              checked={useGrantData}
+              onChange={handleCheckboxChange}
+            />
+            Use Grant's Data
+          </label>
+        <div className="form-actions">
+          <a type="button" onClick={handleLogin}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Submit
+          </a>
+        </div>
       </form>
     </div>
   );
 };
 
 export default Login;
+
 
 

@@ -509,6 +509,16 @@
     }
   }
 
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .checkbox-container input {
+    margin-right: 5px;
+  }
+
   /* Date Picker CSS */
 
 .date-container {
