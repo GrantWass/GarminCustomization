@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import MileageGraph from './MileageGraph';
+import { Grid, Paper } from '@mui/material';
+
 
 const MockData = [
     {
@@ -54,31 +57,24 @@ const MockData = [
   
   const Interface = () => {
     return (
-      <div>
-        <h2>Mock Data</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Day</th>
-              <th>Distance (miles)</th>
-              <th>Duration (minutes)</th>
-              <th>Elevation Gain (feet)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {MockData.map((data, index) => (
-              <tr key={index}>
-                <td>{data.date}</td>
-                <td>{data.day}</td>
-                <td>{data.distance_miles}</td>
-                <td>{data.duration_minutes}</td>
-                <td>{data.elevation_gain_feet}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <Grid container spacing={2}>
+      <Grid item xs={2}>
+        <Paper>Grid Item 2</Paper>
+      </Grid>
+      <Grid item xs={2}>
+        <Paper>Grid Item 2</Paper>
+      </Grid>
+      <Grid item xs={8}>
+        <MileageGraph data={MockData} />
+      </Grid>
+      <Grid item xs={6}>
+        <Paper>Grid Item 2</Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <Paper>Grid Item 3</Paper>
+      </Grid>
+      {/* Add more Grid items here */}
+    </Grid>
     );
   };
   

@@ -1,0 +1,13 @@
+.mileage-bar{
+    border-radius: 10px;
+    height: 5vh;
+    margin: 2px 0px;
+}
+
+.mileage-graph{
+    background-color: rgb(54, 53, 53);
+    padding: 30px;
+    border-radius: 20px;
+
+
+}

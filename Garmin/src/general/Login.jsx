@@ -3,7 +3,6 @@ import "./general.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
-
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
