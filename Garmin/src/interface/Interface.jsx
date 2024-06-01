@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MileageGraph from './MileageGraph';
-import { Grid, Paper } from '@mui/material';
+import LastRun from './LastRun'
 
 
 const MockData = [
@@ -57,24 +57,23 @@ const MockData = [
   
   const Interface = () => {
     return (
-    <Grid container spacing={2}>
-      <Grid item xs={2}>
-        <Paper>Grid Item 2</Paper>
-      </Grid>
-      <Grid item xs={2}>
-        <Paper>Grid Item 2</Paper>
-      </Grid>
-      <Grid item xs={8}>
+    <div className="grid-container">
+      <div className="grid_spot last-run">
+        <LastRun/>
+      </div>
+      <div className="grid_spot item2">
+        Weekly Mileage
+      </div>
+      <div className="grid_spot mileage-graph">
         <MileageGraph data={MockData} />
-      </Grid>
-      <Grid item xs={6}>
-        <Paper>Grid Item 2</Paper>
-      </Grid>
-      <Grid item xs={6}>
-        <Paper>Grid Item 3</Paper>
-      </Grid>
-      {/* Add more Grid items here */}
-    </Grid>
+      </div>
+      <div className="grid_spot item4">
+        Stats
+      </div>
+      <div className="grid_spot item5">
+        IDK
+      </div>
+    </div>
     );
   };
   

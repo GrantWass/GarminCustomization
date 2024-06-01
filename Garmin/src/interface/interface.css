@@ -1,13 +1,60 @@
 .mileage-bar{
     border-radius: 10px;
-    height: 5vh;
+    height: 15%;
     margin: 2px 0px;
 }
 
-.mileage-graph{
+/* Interface.css */
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      "last-run last-run last-run last-run mileage-graph mileage-graph"
+      "item2 item2 item2 item2 mileage-graph mileage-graph"
+      "item2 item2 item2 item2 mileage-graph mileage-graph"
+      "item5 item5 item5 item4 item4 item4";
+    gap: 10px;
+    width:98vw;
+    height:90vh;
+    margin-top: 3vh;
+  }
+  
+  .grid_spot {
+    border: 1px solid #ffffff;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+  }
+  
+  .last-run {
+    grid-area: last-run;
+    display: flex;
+    flex-direction: row;
+    gap:30px;
+    max-width: 80vw;
+  }
+  
+  .item2 {
+    grid-area: item2;
+  }
+  
+  .mileage-graph {
+    grid-area: mileage-graph;
     background-color: rgb(54, 53, 53);
     padding: 30px;
     border-radius: 20px;
-
-
-}
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100%;
+    width: 100%;
+    min-width: 20vw;
+  }
+  
+  .item4 {
+    grid-area: item4;
+  }
+  
+  .item5 {
+    grid-area: item5;
+  }

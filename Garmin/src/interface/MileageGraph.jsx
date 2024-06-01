@@ -6,7 +6,7 @@ const MileageGraph = ({ data }) => {
   const maxDistance = Math.max(...distances);
 
   return (
-    <div className='mileage-graph' style={{ display: 'flex', height: 'auto', width: '50vw', flexDirection:'column-reverse'}}>
+    <div className='mileage-graph'>
       {distances.map((distance, index) => (
         <div
         key={index}

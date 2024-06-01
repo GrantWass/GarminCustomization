@@ -5,19 +5,16 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import io
 import concurrent.futures
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
+api_sessions = {}
 
 def init_api(username, password):
     api = Garmin(username, password)
     api.login()
     return api
-
-api = init_api("grantwass123@icloud.com", "Exposed4!?")
-
-api_sessions = {}
-
 
 def fetch_activity_data(api, activity_id):
     gpx_data = api.download_activity(
@@ -82,3 +79,21 @@ def login():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+
+    # startdate = datetime.datetime(2024,4,22)
+    # enddate = datetime.datetime(2024,4,24)
+
+    # activities = api.get_activities_by_date(startdate, enddate, 'running')
+
+    # total_distance = 0
+
+    # for activity in activities:
+    #     csv_data = api.download_activity(activity, dl_fmt=api.ActivityDownloadFormat.CSV)
+        
+    #     df = pd.read_csv(csv_data)
+        
+    #     # Sum up the distance column
+    #     total_distance += df['distance'].sum()
+
+    # print(f'Total Distance: {total_distance}')
