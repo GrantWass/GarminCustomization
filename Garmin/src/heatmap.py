@@ -14,11 +14,9 @@ def init_api(username, password):
     api.login()
     return api
 
-# api = init_api("Maxfieldjaedon@gmail.com", "Aaronjam327")
-# api = init_api("asim_582@yahoo.com", "Asimali16")
-# api = init_api("liemchot1@gmail.com", "Old67898")
 api = init_api("grantwass123@icloud.com", "Exposed4!?")
 
+api_sessions = {}
 
 
 def fetch_activity_data(api, activity_id):
@@ -61,16 +59,26 @@ def get_points():
     start_date_str = data.get('start_date')
     end_date_str = data.get('end_date')
     username = data.get('username')
-    password = data.get('password')
 
-    # api = init_api(username, password)
+    api = api_sessions[username]
 
     start_date = datetime.datetime.strptime(start_date_str, '%Y-%m-%d').date()
     end_date = datetime.datetime.strptime(end_date_str, '%Y-%m-%d').date()
 
     points = load_points(start_date, end_date, api)
-    # api.logout()
     return jsonify(points)
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+    api = init_api(username, password)
+
+    api_sessions[username] = api
+
+    return jsonify('success')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

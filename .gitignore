@@ -14,7 +14,7 @@ dist-ssr
 
 /runs
 
-consts.env
+config.js
 
 
 # Editor directories and files

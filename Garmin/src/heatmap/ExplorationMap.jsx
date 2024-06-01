@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader, HeatmapLayer } from '@react-google-maps/api';
 import "./heatmap.css"
+import config from '../../config';
 
 
 const libraries = ['visualization'];
@@ -18,7 +19,7 @@ const Exploration = ({ heatmapData, radius, opacity, containerStyle, center }) =
 
   const {isLoaded} = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyCsLPcTF_lqACeHvVjmJ1xbHZAaMsYvoH8",
+    googleMapsApiKey: config.googleApiKey,
     libraries
   });
 

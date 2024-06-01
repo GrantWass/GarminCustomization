@@ -2,6 +2,9 @@
 import "./general.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import config from '../../config';
+import axios from 'axios';
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,11 +13,23 @@ const Login = () => {
   const [useGrantData, setUseGrantData] = useState(false);
 
   const handleLogin = () => {
-    const emailToUse = useGrantData ? import.meta.env.VITE_EMAIL : email;
-    const passwordToUse = useGrantData ? import.meta.env.VITE_PASSWORD : password;
+    const emailToUse = useGrantData ? config.email : email;
+    const passwordToUse = useGrantData ? config.password : password;
 
     localStorage.setItem("email", emailToUse);
-    localStorage.setItem("password", passwordToUse);
+
+    const login = async () => {
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/login', {
+          username: emailToUse,
+          password: passwordToUse,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    login()
 
     navigate("/home");
   };

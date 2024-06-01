@@ -24,7 +24,6 @@ function Map() {
           start_date: start,
           end_date: end,
           username: localStorage.getItem("email"),
-          password: localStorage.getItem("password"),
         });
         setHeatmapData(response.data);
       } catch (error) {
