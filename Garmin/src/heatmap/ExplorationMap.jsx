@@ -14,7 +14,7 @@ const gradient = [
     'rgba(128, 128, 128, 0)',
   ];
 
-const Exploration = ({ heatmapData, radius, opacity, containerStyle, center }) => {
+const Exploration = ({ heatmapData, radius, opacity, containerStyle, center, mapStyle }) => {
   const [map, setMap] = useState(null);
 
   const {isLoaded} = useJsApiLoader({
@@ -40,6 +40,9 @@ const Exploration = ({ heatmapData, radius, opacity, containerStyle, center }) =
               center={center}
               onLoad={onLoad}
               onUnmount={onUnmount}
+              options={{
+                styles: mapStyle
+              }}
             >
                 <HeatmapLayer
                     data={heatmapData.map((point) => new window.google.maps.LatLng(point[0], point[1]))}

@@ -308,6 +308,7 @@
     font-weight: 500;
     flex-direction: row;
     font-family: "Inter", sans-serif;
+    font-size: max(0.9vw, 12px);
     .svg-container {
       width: 20px;
       height: 20px;

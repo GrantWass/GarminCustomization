@@ -7,15 +7,44 @@ import ExplorationMap from './ExplorationMap';
 
 const containerStyle = { width: '100%', height: '100%', overflow: 'hidden', borderRadius: "20px"};
 const center = { lat: 40.8, lng: -96.7 };
+const mapStyle = [
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  }
+]
 
 function Map() {
   const [heatmapData, setHeatmapData] = useState([]);
   const [radius, setRadius] = useState(30);
   const [opacity, setOpacity] = useState(0.8);
   const [selectedMap, setSelectedMap] = useState('Exploration'); 
+  const [loading, setLoading] = useState(true); // Add loading state
   const location = useLocation();
   const { start, end } = location.state || {};
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +55,7 @@ function Map() {
           username: localStorage.getItem("email"),
         });
         setHeatmapData(response.data);
+        setLoading(false); // Set loading to false when data is fetched
       } catch (error) {
         console.error(error);
       }
@@ -43,10 +73,9 @@ function Map() {
     setOpacity(newOpacity);
   };
 
-  return <>
-      {heatmapData.length > 0 && (
-        <>
-      <div id="map-selection">
+  return (
+    <>
+      <div className="map-selection">
         <button onClick={() => setSelectedMap('Exploration')} title="Exploration Map" className={selectedMap === 'Exploration' ? 'this' : ''}>
           <i className="fas fa-map"></i> 
           <p>Exploration</p>
@@ -55,29 +84,32 @@ function Map() {
           <i className="fas fa-fire"></i> 
           <p>Heatmap</p>
         </button>
+      </div>
+      <div className="map-container">
+        <div className="floating-panel">
+          <button onClick={changeRadius} title="Change Radius" >
+            <i className="fas fa-circle"></i>
+            <p>Radius</p>
+          </button>
+          <button onClick={changeOpacity} title="Change Opacity">
+            <i className="fas fa-adjust"></i>
+            <p>Opacity</p>
+          </button>
         </div>
-        <div className="map-container">
-          <div id="floating-panel">
-            <button onClick={changeRadius} title="Change Radius" >
-              <i className="fas fa-circle"></i>
-            </button>
-            <button onClick={changeOpacity} title="Change Opacity">
-              <i className="fas fa-adjust"></i>
-            </button>
-          </div>
-          <div className="map" >
-              {selectedMap === 'Exploration' ? (
-                  <ExplorationMap heatmapData={heatmapData} containerStyle={containerStyle} center={center} radius={radius} opacity={opacity}/>
-                ) : (
-                  <Heatmap heatmapData={heatmapData} containerStyle={containerStyle} center={center} radius={radius/6} opacity={opacity}/>
-              )}
-          </div>
+        <div className="map">
+          {!loading ? (
+            selectedMap === 'Exploration' ? (
+              <ExplorationMap heatmapData={heatmapData} containerStyle={containerStyle} center={center} radius={radius} opacity={opacity} mapStyle={mapStyle}/>
+            ) : (
+              <Heatmap heatmapData={heatmapData} containerStyle={containerStyle} center={center} radius={radius/6} opacity={opacity} mapStyle={mapStyle}/>
+            )
+          ) : (
+            <Loading />
+          )}
         </div>
-        </>
-        )}
-        {heatmapData.length === 0 && <Loading />}
-      </>
+      </div>
+    </>
+  );
 }
 
 export default React.memo(Map);
-

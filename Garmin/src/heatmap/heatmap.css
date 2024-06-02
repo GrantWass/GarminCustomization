@@ -1,19 +1,5 @@
 
   /* Heatmap CSS*/
-  
-  #floating-panel {
-    position: absolute;
-    top: 10px;
-    left: 25%;
-    z-index: 5;
-    background-color: #fff;
-    padding: 5px;
-    border: 1px solid #999;
-    text-align: center;
-    font-family: 'Roboto','sans-serif';
-    line-height: 30px;
-  }
-
   .map-container {
     display: flex;
     justify-content: center;
@@ -21,7 +7,7 @@
     width: 100vw;
   }
 
-  #floating-panel {
+  .floating-panel {
     position: absolute;
     top: 50%;
     left: 1%;
@@ -33,12 +19,13 @@
     height: 20%;
     background: transparent;
     border: none;
+    padding: 5px;
   }
   
-  #floating-panel button {
+  .floating-panel button {
     background: #fff;
-    width: 100%;
-    height: 50%;
+    width: auto;
+    height: auto;
     border: none;
     padding: 10px;
     border-radius: 5px;
@@ -46,31 +33,36 @@
     cursor: pointer;
     transition: background-color 0.3s;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;  
+    color: black;
   }
   
-  #floating-panel button:hover {
+  .floating-panel button:hover {
     background: #f0f0f0;
   }
   
-  #floating-panel button i {
-    font-size: 20px;
-    color: #333;
+  .floating-panel button i {
+    font-size: 3.5vh;
+  }
+  .floating-panel button p {
+    margin-top: 10px;
+    font-size: 2vh;
   }
 
-  #map-selection{
+  .map-selection{
     position: absolute;
     left: 38%;
     top: 1%;
     z-index: 100;
   }
 
-  #map-selection button:hover{
+  .map-selection button:hover{
     background: #f0f0f0;
   }
 
-  #map-selection button {
+  .map-selection button {
     background: white;
     border: none;
     padding: 10px;
@@ -80,15 +72,18 @@
     transition: background-color 0.3s;
     margin-right: 10px;
     opacity: .55;
+    font-size: 1.8vh;
+    width: auto;
+    color: black;
   }
 
   .this{
     opacity: 1!important;
   }
 
-.map {
-  width: 92vw;
-  height: 86vh;
-  margin-left: 6vw;
-  margin-top: 9vh;
-}
+  .map {
+    width: 92vw;
+    height: 86vh;
+    margin-left: 6vw;
+    margin-top: 9vh;
+  }

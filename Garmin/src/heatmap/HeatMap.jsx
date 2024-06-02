@@ -4,8 +4,39 @@ import "./heatmap.css"
 import config from '../../config';
 
 const libraries = ['visualization'];
+const gradient = [
+  'rgba(0,0,0,0)',
+  'rgba(255, 255, 0, 1)',
+  'rgba(255, 229, 0, 1)',
+  'rgba(255, 204, 0, 1)',
+  'rgba(255, 279, 0, 1)',
+  'rgba(255, 153, 0, 1)',
+  'rgba(255, 128, 0, 1)',
+  'rgba(255, 102, 0, 1)',
+  'rgba(255, 76, 0, 1)',
+  'rgba(255, 51, 0, 1)',
+  'rgba(255, 25, 0, 1)',
+  'rgba(255, 0, 0, 1)',
+];
 
-const Heat = ({ heatmapData, radius, opacity, containerStyle, center}) => {
+// const gradient = [
+//   'rgba(0,0,0,0)',       //(fully transparent)
+//   'rgba(255,255,255,1)', // White (fully opaque)
+//   'rgba(255,109,0,1)',   // Orange
+//   'rgba(255,171,73,1)',  // Orange
+//   'rgba(255,234,131,1)', // Light yellow
+//   'rgba(254,254,191,1)', // Yellow
+//   'rgba(249,251,236,1)', // Light yellow
+//   'rgba(254,254,190,1)', // Pale yellow
+//   'rgba(253,208,162,1)', // Light orange
+//   'rgba(252,157,154,1)', // Orange-pink
+//   'rgba(212,90,162,1)',  // Pink
+//   'rgba(155,61,179,1)',  // Light purple
+//   'rgba(98,37,139,1)',   // Purple
+//   'rgba(39,18,82,1)',    // Dark purple
+// ];
+
+const Heat = ({ heatmapData, radius, opacity, containerStyle, center, mapStyle}) => {
   const [map, setMap] = useState(null);
 
   const {isLoaded} = useJsApiLoader({
@@ -30,6 +61,9 @@ const Heat = ({ heatmapData, radius, opacity, containerStyle, center}) => {
               center={center}
               onLoad={onLoad}
               onUnmount={onUnmount}
+              options={{
+                styles: mapStyle
+              }}
             >
                 <HeatmapLayer
                     data={heatmapData.map((point) => new window.google.maps.LatLng(point[0], point[1]))}
@@ -38,6 +72,7 @@ const Heat = ({ heatmapData, radius, opacity, containerStyle, center}) => {
                         opacity: opacity,
                         weight: 5,
                         maxIntensity: 25,
+                        gradient: gradient
                     }}
                 />
             </GoogleMap>
