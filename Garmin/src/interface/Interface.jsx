@@ -1,80 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import MileageGraph from './MileageGraph';
 import LastRun from './LastRun'
+import axios from 'axios';
+import Loading from '../general/Loading';
 
-
-const MockData = [
-    {
-      "date": "2023-05-17",
-      "day": "monday",  
-      "distance_miles": 5.2,
-      "duration_minutes": 45,
-      "elevation_gain_feet": 150
-    },
-    {
-      "date": "2023-05-18",
-      "day": "tuesday",  
-      "distance_miles": 6.5,
-      "duration_minutes": 55,
-      "elevation_gain_feet": 200
-    },
-    {
-      "date": "2023-05-19",
-      "day": "wednesday",  
-      "distance_miles": 4.3,
-      "duration_minutes": 40,
-      "elevation_gain_feet": 120
-    },
-    {
-      "date": "2023-05-20",
-      "day": "thursday",  
-      "distance_miles": 7.1,
-      "duration_minutes": 65,
-      "elevation_gain_feet": 250
-    },
-    {
-      "date": "2023-05-21",
-      "day": "friday",  
-      "distance_miles": 3.8,
-      "duration_minutes": 35,
-      "elevation_gain_feet": 100
-    },
-    {
-      "date": "2023-05-22",
-      "day": "saturday",  
-      "distance_miles": 5.9,
-      "duration_minutes": 50,
-      "elevation_gain_feet": 180
-    },
-    {
-      "date": "2023-05-23",
-      "day": "sunday",  
-      "distance_miles": 6.2,
-      "duration_minutes": 53,
-      "elevation_gain_feet": 210
-    }
-  ]
   
   const Interface = () => {
+    const [lastWeekData, setLastWeekData] = useState({});
+    const [dateIndex, setDateIndex] = useState(0);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.post('http://127.0.0.1:5000/last_week_data', {
+            username: localStorage.getItem("email"),
+          });
+          setLastWeekData(response.data)
+          console.log(response.data)
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchData();
+    }, []);
+
     return (
-    <div className="grid-container">
-      <div className="grid_spot last-run">
-        <LastRun/>
-      </div>
-      <div className="grid_spot item2">
-        Weekly Mileage
-      </div>
-      <div className="grid_spot mileage-graph">
-        <MileageGraph data={MockData} />
-      </div>
-      <div className="grid_spot item4">
-        Stats
-      </div>
-      <div className="grid_spot item5">
-        IDK
-      </div>
-    </div>
+      <>
+        {lastWeekData.length > 0 ? (
+          <div className="grid-container">
+            <div className="grid_spot last-run">
+              <LastRun run={lastWeekData[dateIndex]}/>
+            </div>
+            <div className="grid_spot item2">
+              Weekly Mileage
+            </div>
+            <div className="grid_spot mileage-graph">
+              <MileageGraph data={lastWeekData.slice(0, 7)} setDateIndex={setDateIndex} />
+            </div>
+            <div className="grid_spot item4">
+              Stats
+            </div>
+            <div className="grid_spot item5">
+              IDK
+            </div>
+          </div>
+        ) : (
+          <Loading/>
+        )}
+      </>
     );
+    
   };
   
   export default Interface;

@@ -1,9 +1,3 @@
-.mileage-bar{
-    border-radius: 10px;
-    height: 15%;
-    margin: 2px 0px;
-}
-
 /* Interface.css */
 .grid-container {
     display: grid;
@@ -29,10 +23,13 @@
   
   .last-run {
     grid-area: last-run;
-    display: flex;
-    flex-direction: row;
     gap:30px;
+    background-color: rgb(54, 53, 53);
+    border-radius: 20px;
     max-width: 80vw;
+    position: relative;
+    width: 100%;
+    height: 100%;
   }
   
   .item2 {
@@ -42,10 +39,10 @@
   .mileage-graph {
     grid-area: mileage-graph;
     background-color: rgb(54, 53, 53);
-    padding: 30px;
+    padding: 20px;
     border-radius: 20px;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     height: 100%;
     width: 100%;
     min-width: 20vw;
@@ -58,3 +55,90 @@
   .item5 {
     grid-area: item5;
   }
+
+  /* Mileage Graph */
+  .mileage-bar{
+    border-radius: 10px;
+    height: 15%;
+    margin: 2px 0px;
+  }
+
+  .mileage-bar:hover{
+    background-color: gray!important;
+    transform: scaleX(1.03); 
+  }
+
+  .mileage-graph p {
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    font-size: max(1.4vw, 13px);
+    margin-bottom: 2vh;
+  }
+
+    /* Last Run */
+    .location{
+      font-family: "Inter", sans-serif;
+      font-weight: bold;
+      position: absolute;
+      font-size: 4.8vh;
+      top: 6%; 
+      left: 8%; 
+    }
+
+    .activity-details{
+      font-family: "Inter", sans-serif;
+      font-weight: medium;
+      position: absolute;
+      top: 38%; 
+      left: 50%;
+      font-size: 2.6vh;
+    }
+
+    .start-time{
+      font-family: "Inter", sans-serif;
+      font-weight: lighter;
+      position: absolute;
+      top: 65%; 
+      left: 10%;
+      font-size: 3.3vh;
+    }
+
+    .date{
+      font-family: "Inter", sans-serif;
+      font-weight: lighter;
+      position: absolute;
+      top: 40%; 
+      left: 13%;
+      font-size: 3.3vh;
+    }
+
+    .distance{
+      margin-top: -5px;
+    }
+    .duration{
+      margin-top: -8px;
+    }
+    .pace{
+      margin-top: -8px;
+    }
+    .elevation{
+      margin-top: -8px;
+    }
+    
+    /* SMALL MAP CSS */
+    .map {
+      position: absolute;
+      top: -31%;
+      left: 67%;
+      width: 9vw;
+      height: 18vh;
+    }
+    
+    .marker {
+      position: absolute;
+      width: 8px;
+      height: 8px; 
+      background-color: red;
+      border-radius: 50%;
+    }
+    

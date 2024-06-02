@@ -42,7 +42,7 @@ function Map() {
   const [radius, setRadius] = useState(30);
   const [opacity, setOpacity] = useState(0.8);
   const [selectedMap, setSelectedMap] = useState('Exploration'); 
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const { start, end } = location.state || {};
 
@@ -55,7 +55,7 @@ function Map() {
           username: localStorage.getItem("email"),
         });
         setHeatmapData(response.data);
-        setLoading(false); // Set loading to false when data is fetched
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
