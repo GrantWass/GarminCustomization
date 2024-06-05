@@ -3,10 +3,12 @@ import MileageGraph from './MileageGraph';
 import LastRun from './LastRun'
 import axios from 'axios';
 import Loading from '../general/Loading';
+import WeeklyMileage from './WeeklyMileage'
 
   
   const Interface = () => {
     const [lastWeekData, setLastWeekData] = useState({});
+    const [weeklyMileage, setWeeklyMileage] = useState([]);
     const [dateIndex, setDateIndex] = useState(0);
 
     useEffect(() => {
@@ -16,12 +18,23 @@ import Loading from '../general/Loading';
             username: localStorage.getItem("email"),
           });
           setLastWeekData(response.data)
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      const fetchWeeklyData = async () => {
+        try {
+          const response = await axios.post('http://127.0.0.1:5000/weekly_mileage', {
+            username: localStorage.getItem("email"),
+          });
+          setWeeklyMileage(response.data)
           console.log(response.data)
         } catch (error) {
           console.error(error);
         }
       };
       fetchData();
+      fetchWeeklyData();
     }, []);
 
     return (
@@ -31,17 +44,17 @@ import Loading from '../general/Loading';
             <div className="grid_spot last-run">
               <LastRun run={lastWeekData[dateIndex]}/>
             </div>
-            <div className="grid_spot item2">
-              Weekly Mileage
+            <div className="grid_spot weekly-mileage">
+              <WeeklyMileage data = {weeklyMileage}/>
             </div>
             <div className="grid_spot mileage-graph">
-              <MileageGraph data={lastWeekData.slice(0, 7)} setDateIndex={setDateIndex} />
+              <MileageGraph data={lastWeekData.slice(0, 8)} setDateIndex={setDateIndex} />
             </div>
             <div className="grid_spot item4">
-              Stats
+              Stats/Workout Recommendation
             </div>
             <div className="grid_spot item5">
-              IDK
+              Performance Analysis
             </div>
           </div>
         ) : (

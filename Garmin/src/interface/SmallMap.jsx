@@ -28,7 +28,7 @@ const SmallMap = ({ coordinates }) => {
   }
 
   return (
-    <div className="map">
+    <div className="small-map">
       {coordinates.map((coordinate, index) => (
         <div
           key={index}

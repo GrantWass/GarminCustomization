@@ -1,4 +1,5 @@
 import SmallMap from './SmallMap'
+import React, { } from 'react';
 
 const RunDetails = (run) => {
   run = run.run

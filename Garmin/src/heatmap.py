@@ -97,6 +97,37 @@ def get_activity_info(activity_data, api):
         'coords': coords
     }
 
+def get_basic_activity_info(activity_data, api):
+    # Convert distance from meters to miles
+    distance_miles = activity_data['distance'] * 0.000621371
+    
+    start_time_local = activity_data['startTimeLocal']
+    
+    # Split the start_time_local into date and time components
+    start_date, start_time = start_time_local.split(' ')
+
+    
+    # Convert duration from seconds to H:MM format
+    duration_seconds = activity_data['duration']
+    duration = duration_seconds // 60
+
+    if 'elevationGain' in activity_data:
+        elevation_gain_feet = activity_data['elevationGain'] * 3.28084
+    else:
+        elevation_gain_feet = 0
+    
+    return {
+        'distance_miles': distance_miles,
+        'duration': duration,
+        'elevation_gain_feet': elevation_gain_feet,
+        'date': start_date,
+    }
+
+def shift_week_number(week_number, current_week_number):
+    if week_number < current_week_number - 52:
+        return week_number + 52
+    return week_number
+
 
 @app.route('/get_points', methods=['POST'])
 def get_points():
@@ -113,6 +144,58 @@ def get_points():
     points = load_points(start_date, end_date, api)
     return jsonify(points)
 
+@app.route('/weekly_mileage', methods=['POST'])
+def get_weekly_mileage():
+    data = request.json
+    username = data.get('username')
+
+    api = api_sessions[username]
+
+    today = datetime.date.today()
+    startdate = today - datetime.timedelta(days=365)
+    enddate = today
+
+    activities = api.get_activities_by_date(startdate.isoformat(), enddate.isoformat(), 'running')
+
+    runs = []
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [
+            executor.submit(get_basic_activity_info, activity, api)
+            for activity in activities
+        ]
+        for future in concurrent.futures.as_completed(futures):
+            activity_data = future.result()
+            if activity_data:
+                activity_data['date'] = datetime.datetime.strptime(activity_data['date'], '%Y-%m-%d').date()
+                runs.append(activity_data)
+    
+    # sort dates after concurent requests speed them up
+    runs.sort(key=lambda x: (x['date'] != today, abs(x['date'] - today), x['date']))
+
+    # look to change this to add elevation and duration too
+    # also need to figure out how to handle weeks in previous years
+    weekly_mileage = {}
+    for activity in runs:
+        activity_date = activity['date']
+        week_number = activity_date.isocalendar()[1]
+        if week_number not in weekly_mileage:
+            weekly_mileage[week_number] = 0
+        weekly_mileage[week_number] += activity['distance_miles']
+
+    current_week_number = datetime.datetime.now().isocalendar()[1]
+    week_difference = 52 - current_week_number
+    relative_weeks_back = []
+    for week_number, mileage in weekly_mileage.items():
+        relative_weeks_back.append(((week_number + week_difference) % 52, mileage))
+
+
+    # relative_weeks_back = [(current_week_number - week_number, mileage) for week_number, mileage in weekly_mileage.items()]
+    sorted_weeks_back = sorted(relative_weeks_back)
+
+    print(sorted_weeks_back)
+
+    return jsonify(sorted_weeks_back)
+
 @app.route('/last_week_data', methods=['POST'])
 def get_last_week_data():
     data = request.json
@@ -121,7 +204,7 @@ def get_last_week_data():
     api = api_sessions[username]
 
     today = datetime.date.today()
-    startdate = today - datetime.timedelta(days=365)
+    startdate = today - datetime.timedelta(days=36)
     enddate = today
 
     activities = api.get_activities_by_date(startdate.isoformat(), enddate.isoformat(), 'running')
@@ -142,20 +225,6 @@ def get_last_week_data():
     runs.sort(key=lambda x: (x['date'] != today, abs(x['date'] - today), x['date']))
     for activity_data in runs:
         activity_data['date'] = activity_data['date'].strftime("%a, %B %d %Y")
-
-    weekly_mileage = {}
-    for activity in runs:
-        activity_date = datetime.datetime.strptime(activity['date'], "%a, %B %d %Y")
-        week_number = activity_date.isocalendar()[1]
-        if week_number not in weekly_mileage:
-            weekly_mileage[week_number] = 0
-        weekly_mileage[week_number] += activity['distance_miles']
-
-    current_week_number = datetime.now().isocalendar()[1]
-    relative_weeks_back = [(current_week_number - week_number, mileage) for week_number, mileage in weekly_mileage]
-    sorted_weeks_back = sorted(relative_weeks_back)
-
-    print(sorted_weeks_back)
 
     return jsonify(runs)
 
