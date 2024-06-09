@@ -188,8 +188,6 @@ def get_weekly_mileage():
     for week_number, mileage in weekly_mileage.items():
         relative_weeks_back.append(((week_number + week_difference) % 52, mileage))
 
-
-    # relative_weeks_back = [(current_week_number - week_number, mileage) for week_number, mileage in weekly_mileage.items()]
     sorted_weeks_back = sorted(relative_weeks_back)
 
     print(sorted_weeks_back)

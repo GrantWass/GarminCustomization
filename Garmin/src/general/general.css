@@ -307,7 +307,7 @@
     font-weight: 500;
     flex-direction: row;
     font-family: "Inter", sans-serif;
-    font-size: max(0.9vw, 12px);
+    font-size: max(0.9vw, 15px);
     .svg-container {
       width: 20px;
       height: 20px;
@@ -316,6 +316,7 @@
       display:flex;
       flex-direction: row;
       gap: 10px;
+      font-weight: bolder;
     }
     .nav-right{
       display:flex;
@@ -326,6 +327,7 @@
 
   footer{
     font-family: "Inter", sans-serif;
+    font-size: max(0.9vw, 13px);
   }
 
   nav .nav-right > div:hover {

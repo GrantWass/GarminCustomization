@@ -16,6 +16,10 @@ const DateRangePicker = () => {
   };
 
   return (
+    <>
+    <div className='date-title'>
+      
+    </div>
     <div className='date-container'>
     <div className="date-range-picker">
       <div className="date-picker">
@@ -40,6 +44,7 @@ const DateRangePicker = () => {
       </div>
       <button className= "confirm" onClick={() => {navigate('/map', {state: { start: startDate, end: endDate }})}}>Confrim Dates</button>
       </div>
+      </>
   );
 };
 

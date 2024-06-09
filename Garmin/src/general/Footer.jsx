@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer style={footerStyle}>
       <div>
-        <p style={textStyle}>Disclaimer: This website is intended for personal use only and is not for commercial purposes.</p>
+        <p style={textStyle}>Disclaimer: This website is intended for personal/educational use only and is not for commercial purposes.</p>
       </div>
       <div style={contentStyle}>
         <p>Github Link: </p>
