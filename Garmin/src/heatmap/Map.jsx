@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 import Loading from "../general/Loading";
 import Heatmap from "./HeatMap";
 import ExplorationMap from './ExplorationMap';
+import isPointInCountry from '../functions/Location';
+
 
 const containerStyle = { width: '100%', height: '100%', overflow: 'hidden', borderRadius: "20px"};
 const center = { lat: 40.8, lng: -96.7 };
@@ -55,6 +57,16 @@ function Map() {
           username: localStorage.getItem("email"),
         });
         setHeatmapData(response.data);
+
+        const countyPromises = [];
+        for (let i = 0; i < response.data.length; i += 1000) {
+          const point = response.data[i];
+          countyPromises.push(
+            isPointInCountry({ lon: point.lon, lat: point.lat })
+          );
+        }
+        await Promise.all(countyPromises);
+
         setLoading(false);
       } catch (error) {
         console.error(error);

@@ -11,21 +11,16 @@ const SmallMap = ({ coordinates }) => {
   const rangeX = maxX - minX;
   const rangeY = maxY - minY;
 
+  // Calculate scale factors
   const scaleFactorX = 100 / rangeX;
   const scaleFactorY = 100 / rangeY;
-
-  const scaleFactor = Math.min(scaleFactorX, scaleFactorY)
-  // X is true, Y is false
-  const scaleDirection = (scaleFactorX - scaleFactorY) > 0 ? true : false
-  const scaleFactorDifference = Math.abs(scaleFactorX - scaleFactorY)
-
-  let offsetX = 0
-  let offsetY = 0
-  if (scaleDirection){
-    offsetX = scaleFactorDifference * 0.8
-  } else {
-    offsetY = scaleFactorDifference
-  }
+  
+  // Use the smaller scale factor to maintain aspect ratio
+  const scaleFactor = Math.min(scaleFactorX, scaleFactorY);
+  
+  // Calculate offset to center the map within the container
+  const offsetX = (scaleFactorX - scaleFactor) / 2 * rangeX;
+  const offsetY = (scaleFactorY - scaleFactor) / 2 * rangeY;
 
   return (
     <div className="small-map">
@@ -34,8 +29,8 @@ const SmallMap = ({ coordinates }) => {
           key={index}
           className="marker"
           style={{
-            bottom: `${(coordinate[0] - minX) * scaleFactor + (offsetX/100)}%`,
-            left: `${(coordinate[1] - minY) * scaleFactor + (offsetY/100)}%`,
+            bottom: `${(coordinate[1] - minY) * scaleFactor + offsetY}%`,
+            left: `${(coordinate[0] - minX) * scaleFactor + offsetX -10}%`,
           }}
         />
       ))}
@@ -44,5 +39,3 @@ const SmallMap = ({ coordinates }) => {
 };
 
 export default SmallMap;
-
-

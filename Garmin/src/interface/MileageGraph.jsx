@@ -13,7 +13,7 @@ const MileageGraph = ({ data, setDateIndex }) => {
 
   return (
     <div className='mileage-graph'>
-      <p> Last Seven Runs </p>
+      <p> Recent Runs </p>
       {distances.map((distance, index) => (
         <div
           key={index}

@@ -45,17 +45,17 @@ import WeeklyMileage from './WeeklyMileage'
               <LastRun run={lastWeekData[dateIndex]}/>
             </div>
             <div className="grid_spot weekly-mileage">
-              <WeeklyMileage data = {weeklyMileage}/>
+              <WeeklyMileage data={weeklyMileage}/>
             </div>
             <div className="grid_spot mileage-graph">
               <MileageGraph data={lastWeekData.slice(0, 8)} setDateIndex={setDateIndex} />
             </div>
-            <div className="grid_spot item4">
+            {/* <div className="grid_spot item4">
               Stats/Workout Recommendation
             </div>
             <div className="grid_spot item5">
               Performance Analysis
-            </div>
+            </div> */}
           </div>
         ) : (
           <Loading/>

@@ -46,7 +46,7 @@ return (
         <p className="description">
           Detailing the methods, technology stack, and process I went through to create this website.
         </p>
-        <button>Read More</button>
+        <button onClick={() => {navigate('/methodology')}}>Read More</button>
       </div>
     </li>
     <li className="item" style={{backgroundColor: "#042426"}}>
@@ -79,7 +79,7 @@ return (
         <p className="description">
           An exporatory approach of using training data to predict race times, fatigue levels, and other interesting metrics.
         </p>
-        <button>Explore your data</button>
+        <button onClick={() => {navigate('/machine-learning')}}>Explore your data</button>
       </div>
     </li>
     <li className="item" style={{backgroundColor: "#6c4041"}}>
@@ -90,7 +90,7 @@ return (
         <p className="description">
           Using training data to make graphics which are unique or atypical to attempt to gain new insights on training.
         </p>
-        <button>Explore graphics</button>
+        <button onClick={() => {navigate('/graphics')}}>Explore graphics</button>
       </div>
     </li>
   </ul>

@@ -1,23 +1,23 @@
 import React, { useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader, HeatmapLayer } from '@react-google-maps/api';
-import "./heatmap.css"
+import "./heatmap.css";
 import config from '../../config';
-
 
 const libraries = ['visualization'];
 const gradient = [
-    'rgba(128, 128, 128, 1)',
-    'rgba(128, 128, 128, 0.8)',
-    'rgba(128, 128, 128, 0.6)',
-    'rgba(128, 128, 128, 0.4)',
-    'rgba(128, 128, 128, 0.2)', 
-    'rgba(128, 128, 128, 0)',
-  ];
+  'rgba(128, 128, 128, 1)',
+  'rgba(128, 128, 128, 0.8)',
+  'rgba(128, 128, 128, 0.6)',
+  'rgba(128, 128, 128, 0.4)',
+  'rgba(128, 128, 128, 0.2)',
+  'rgba(128, 128, 128, 0)',
+];
 
 const Exploration = ({ heatmapData, radius, opacity, containerStyle, center, mapStyle }) => {
   const [map, setMap] = useState(null);
+  const [zoom, setZoom] = useState(13);
 
-  const {isLoaded} = useJsApiLoader({
+  const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: config.googleApiKey,
     libraries
@@ -26,38 +26,44 @@ const Exploration = ({ heatmapData, radius, opacity, containerStyle, center, map
   const onLoad = useCallback(function callback(map) {
     map.setZoom(13);
     setMap(map);
+    const zoomChangedListener = map.addListener('zoom_changed', () => {
+      const newZoom = map.getZoom();
+      setZoom(newZoom);
+      console.log('Zoom level:', newZoom); // Print zoom level to the console
+    });
+    return () => google.maps.event.removeListener(zoomChangedListener);
   }, []);
 
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
 
-
-  return  <>
-          {heatmapData.length > 0 && isLoaded && (
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={center}
-              onLoad={onLoad}
-              onUnmount={onUnmount}
-              options={{
-                styles: mapStyle
-              }}
-            >
-                <HeatmapLayer
-                    data={heatmapData.map((point) => new window.google.maps.LatLng(point[0], point[1]))}
-                    options={{
-                        radius: radius,
-                        opacity: opacity,
-                        weight: 5,
-                        maxIntensity: 25,
-                        gradient: gradient
-                    }}
-                />
-            </GoogleMap>
-        )}
-      </>
-}
+  return (
+    <>
+      {heatmapData.length > 0 && isLoaded && (
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          options={{
+            styles: mapStyle
+          }}
+        >
+          <HeatmapLayer
+            data={heatmapData.map((point) => new window.google.maps.LatLng(point[0], point[1]))}
+            options={{
+              radius: radius,
+              opacity: opacity,
+              weight: 5,
+              maxIntensity: 25,
+              gradient: gradient
+            }}
+          />
+        </GoogleMap>
+      )}
+    </>
+  );
+};
 
 export default React.memo(Exploration);
-

@@ -154,7 +154,8 @@
     color: white;
     text-shadow: 0 3px 8px rgba(0,0,0,0.5);
     opacity: 0;
-    display: none;
+    display: flex;
+    text-align: center;
   
     & .title {
       font-family: 'arial-black';
@@ -307,7 +308,8 @@
     font-weight: 500;
     flex-direction: row;
     font-family: "Inter", sans-serif;
-    font-size: max(0.9vw, 15px);
+    font-size: max(1.1vw, 15px);
+    color: white;
     .svg-container {
       width: 20px;
       height: 20px;
@@ -515,6 +517,7 @@
     display: flex;
     align-items: center;
     margin-right: 10px;
+    color: white;
   }
   
   .checkbox-container input {
@@ -522,6 +525,15 @@
   }
 
   /* Date Picker CSS */
+
+.date-title{
+  margin-bottom: 5vh;
+  font-size: 3vw;
+  font-weight: 800;
+  font-family: 'arial-black';
+  text-transform: uppercase;
+  color: white;
+}
 
 .date-container {
   display: flex;
@@ -564,6 +576,8 @@
   font-size: 2rem;
   margin: 0 1rem;
   width: 4rem;
+  text-align: center;
+  color: white;
 }
 
 .confirm {

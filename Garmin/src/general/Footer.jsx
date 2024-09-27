@@ -35,7 +35,7 @@ const textStyle = {
 const linkStyle = {
   color: '#f4f4f4',
   textDecoration: 'none',
-  marginRight: 5
+  marginRight: 5,
 };
 
 const contentStyle = {

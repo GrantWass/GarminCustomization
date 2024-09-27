@@ -4,8 +4,8 @@
     grid-template-areas:
       "last-run last-run last-run last-run mileage-graph mileage-graph"
       "weekly-mileage weekly-mileage weekly-mileage weekly-mileage mileage-graph mileage-graph"
-      "weekly-mileage weekly-mileage weekly-mileage weekly-mileage mileage-graph mileage-graph"
-      "item5 item5 item5 item4 item4 item4";
+      "weekly-mileage weekly-mileage weekly-mileage weekly-mileage mileage-graph mileage-graph";
+      /* "item5 item5 item5 item4 item4 item4"; */
     gap: 10px;
     width:98vw;
     height:90vh;
@@ -19,20 +19,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
-  
-  .last-run {
-    grid-area: last-run;
-    gap:30px;
-    background-color: rgb(54, 53, 53);
-    border-radius: 20px;
-    max-width: 80vw;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 15vh;
-  }
-  
+    
   .weekly-mileage {
     grid-area: weekly-mileage;
     width: 100%;
@@ -64,6 +53,7 @@
     border-radius: 10px;
     height: 15%;
     margin: 2px 0px;
+    transition: all 0.3s ease;
   }
 
   .mileage-bar:hover{
@@ -74,58 +64,76 @@
   .mileage-graph p {
     font-family: "Inter", sans-serif;
     font-weight: bold;
-    font-size: max(1.4vw, 13px);
+    font-size: max(1.6vw, 18px);
     margin-bottom: 2vh;
+    color: white;
   }
 
     /* Last Run */
-    .location{
+    .last-run {
+      grid-area: last-run;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+      animation: fadeIn 0.6s ease-in-out;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+
+    }
+    
+    .run-info {
+      margin-bottom: 20px;
+    }
+    
+    .location {
       font-family: "Inter", sans-serif;
       font-weight: bold;
-      position: absolute;
-      font-size: 4.8vh;
-      top: 6%; 
-      left: 8%; 
+      font-size: 3.6vh;
+      color: #f0f0f0;
+      margin-bottom: 5px;
     }
-
-    .activity-details{
+    
+    .date, .start-time {
+      font-family: "Inter", sans-serif;
+      font-size: 2.4vh;
+      color: #d0d0d0;
+    }
+    
+    .activity-details {
       font-family: "Inter", sans-serif;
       font-weight: medium;
-      position: absolute;
-      top: 38%; 
-      left: 50%;
       font-size: 2.6vh;
+      color: #fff;
+      display: flex;
+      gap: 20px;
     }
-
-    .start-time{
-      font-family: "Inter", sans-serif;
-      font-weight: lighter;
+    
+    .distance, .duration, .pace, .elevation {
+      font-size: 2.2vh;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .small-map {
       position: absolute;
-      top: 65%; 
-      left: 10%;
-      font-size: 3.3vh;
+      top: 10%;
+      right: 20px;
+      width: 30%;
+      height: 70%;
+      /* border-radius: 15px; */
+      /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); */
     }
-
-    .date{
-      font-family: "Inter", sans-serif;
-      font-weight: lighter;
+    
+    .marker {
       position: absolute;
-      top: 40%; 
-      left: 13%;
-      font-size: 3.3vh;
-    }
-
-    .distance{
-      margin-top: -5px;
-    }
-    .duration{
-      margin-top: -8px;
-    }
-    .pace{
-      margin-top: -8px;
-    }
-    .elevation{
-      margin-top: -8px;
+      width: 8px;
+      height: 8px;
+      background-color: red;
+      border-radius: 50%;
     }
     
     /* SMALL MAP CSS */
@@ -133,8 +141,8 @@
       position: absolute;
       top: 10%;
       left: 80%;
-      width: 9vw;
-      height: 18vh;
+      width: 20%;
+      height: 80%;
     }
     
     .marker {
@@ -146,7 +154,14 @@
     }
     
     /* WEEKLY MILEAGE CSS */
-    .line-graph {
-      border: 1px solid #ccc;
+    .bar-graph {
+      width: 100%;
+      height: 100%;
+    }
+
+    .weekly-mileage-container{
+      width: 100%;
+      max-width: 70vw;
+      height: 100%;
     }
     

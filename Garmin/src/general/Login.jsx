@@ -68,7 +68,7 @@ const Login = () => {
               checked={useGrantData}
               onChange={handleCheckboxChange}
             />
-            Use Grant's Data
+            Use {config.name}'s Data
           </label>
         <div className="form-actions">
           <a type="button" onClick={handleLogin}>

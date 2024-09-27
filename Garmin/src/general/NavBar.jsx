@@ -26,10 +26,10 @@ const NavBar = () => {
         <div className="nav-right">
           <div onClick={() => {navigate('/interface')}}>Interface</div>
           <div onClick={() => {navigate('/dates')}}>Heatmap</div>
-          <div>Graphics</div>
-          <div>Machine Learning</div>
-          <div>Methods</div>
-          <div>About Me</div>
+          <div onClick={() => {navigate('/graphics')}}>Graphics</div>
+          <div onClick={() => {navigate('/machine-learning')}}>Machine Learning</div>
+          <div onClick={() => {navigate('/methodology')}}>Methods</div>
+          <div href=''>About Me</div>
           <div className="svg-container">
             <svg
               xmlns="http://www.w3.org/2000/svg"
